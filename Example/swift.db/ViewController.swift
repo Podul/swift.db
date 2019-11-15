@@ -7,12 +7,26 @@
 //
 
 import UIKit
+import swift_db
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        DB.Manager.open(db: "dbname.sqlite3", create: Model.self)
+
+        var model = Model()
+        model.name = "name111"
+        model.text = "text111"
+        DB.Manager.insert(model)
+        
+        model.text = "text222"
+        model.id = 1
+        DB.Manager.update(model)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,4 +35,14 @@ class ViewController: UIViewController {
     }
 
 }
+
+
+
+struct Model: DataBaseModel {
+    var id: Primary = 0
+    var name: String = "name"
+    var text: Text = "text"
+    var optional: String? = nil
+}
+
 

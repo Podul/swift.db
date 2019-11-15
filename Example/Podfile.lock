@@ -1,0 +1,16 @@
+PODS:
+  - swift.db (0.1.0)
+
+DEPENDENCIES:
+  - swift.db (from `../`)
+
+EXTERNAL SOURCES:
+  swift.db:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  swift.db: 7ba88f4c029453a412ff4f62f24324b4c7e5a626
+
+PODFILE CHECKSUM: 10e59be0e6de5ceb900a196f4b792513abe7cc39
+
+COCOAPODS: 1.8.1
