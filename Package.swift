@@ -4,6 +4,11 @@ import PackageDescription
 
 let package = Package(
     name: "swift.db",
+    products: [
+        .library(
+            name: "swift.db",
+            targets: ["swift.db"])
+    ],
     targets: [
         .target(name: "swift.db", path: "Source")
     ],
