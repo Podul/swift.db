@@ -6,7 +6,7 @@
 //  Copyright © 2019 Podul. All rights reserved.
 //  数据库
 
-import UIKit.UIApplication
+import Foundation
 import SQLite3
 
 

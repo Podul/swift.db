@@ -19,7 +19,7 @@ import Foundation
 /// ```
 ///
 
-// MARK: - <#mark#>
+// MARK: - 属性信息
 struct PropertyInfo {
     /// `Sqlite`类型与 `Swift` 类型映射
     enum DBType: String {
