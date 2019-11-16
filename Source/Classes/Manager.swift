@@ -120,7 +120,8 @@ public enum DB {
         /// 查询
         @discardableResult
         public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DataBaseModel {
-            let querySql = "SELECT * FROM \(model.tableName) WHERE \(sql);"
+            let whereSql = (sql.count == 0) ? "" : "WHERE \(sql)"
+            let querySql = "SELECT * FROM \(model.tableName) \(whereSql);"
             guard let db = db else {
                 fatalError("db does not opened")
             }
