@@ -14,13 +14,13 @@
 ### CocoaPods
 
 ```ruby
-pod 'swift.db '~> '0.1.2'
+pod 'swift.db '~> '0.1.4'
 ```
 ### Swift Package Manager
-`0.1.2` 开始支持 `Swift Package Manager`
+`0.1.4` 开始支持 `Swift Package Manager`
 ```swift
 dependencies: [
-    .package(url: "https://github.com/podul/swift.db", from: "0.1.2")
+    .package(url: "https://github.com/podul/swift.db", from: "0.1.4")
 ]
 ```
 
