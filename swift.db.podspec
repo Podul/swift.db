@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'swift.db'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = '用 Swift 方式封装 SQLite'
   s.swift_version 	 = '5.0'
 
@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'Source/Classes/**/*'
-  
+
   # s.resource_bundles = {
   #   'swift.db' => ['swift.db/Assets/*.png']
   # }
