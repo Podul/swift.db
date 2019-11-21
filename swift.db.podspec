@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.version          = '0.1.4'
   s.summary          = '用 Swift 方式封装 SQLite'
   s.swift_version 	 = '5.0'
+  s.module_name      = 'SwiftDB'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?

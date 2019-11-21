@@ -89,7 +89,6 @@ extension DataBaseModel {
         return field
     }
     
-    
     /// To Dictionary
     var db_dictValue: [String: Any] {
         guard let data = try? JSONEncoder().encode(self) else {

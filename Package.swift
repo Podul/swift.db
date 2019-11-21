@@ -6,11 +6,11 @@ let package = Package(
     name: "swift.db",
     products: [
         .library(
-            name: "swift.db",
+            name: "SwiftDB",
             targets: ["swift.db"])
     ],
     targets: [
-        .target(name: "swift.db", path: "Source")
+        .target(name: "SwiftDB", path: "Source")
     ],
     swiftLanguageVersions: [.v5]
 )
