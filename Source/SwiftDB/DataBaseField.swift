@@ -4,11 +4,12 @@
 //
 //  Created by Podul on 2019/11/15.
 //  Copyright © 2019 Podul. All rights reserved.
-//  数据库字段
+//  数据库字段（自定义类型）
 
 import Foundation
 
-protocol CustomDBType: Codable {
+
+protocol CustomDBType: Codable, CustomStringConvertible, CustomDebugStringConvertible {
     associatedtype CustomType: Codable
     var value: CustomType { set get }
 }
@@ -18,11 +19,19 @@ extension CustomDBType {
         var container = encoder.singleValueContainer()
         try container.encode(self.value)
     }
+    
+    public var description: String {
+        return "\(self.value)"
+    }
+    
+    public var debugDescription: String {
+        return description
+    }
 }
 
 // MARK: - <#mark#>
-/// 主键，不要加?，Optional
-public struct Primary: CustomDBType {
+/// 主键，不要加`?`号（不可为 `Optional` 类型）
+ public struct Primary: CustomDBType {
     var value: Int
     
     public init(from decoder: Decoder) throws {
@@ -31,15 +40,11 @@ public struct Primary: CustomDBType {
     }
 }
 
-extension Primary: ExpressibleByIntegerLiteral, CustomStringConvertible {
+extension Primary: ExpressibleByIntegerLiteral {
     public typealias IntegerLiteralType = Int
 
     public init(integerLiteral value: Int) {
         self.value = value
-    }
-    
-    public var description: String {
-        return "\(self.value)"
     }
 }
 
@@ -54,15 +59,11 @@ public struct Integer: CustomDBType {
     }
 }
 
-extension Integer: ExpressibleByIntegerLiteral, CustomStringConvertible {
+extension Integer: ExpressibleByIntegerLiteral {
+    public typealias IntegerLiteralType = Int
+
     public init(integerLiteral value: Int) {
         self.value = value
-    }
-    
-    public typealias IntegerLiteralType = Int
-    
-    public var description: String {
-        return "\(self.value)"
     }
 }
 
@@ -77,22 +78,18 @@ public struct Text: CustomDBType {
     }
 }
 
-extension Text: ExpressibleByStringLiteral, CustomStringConvertible {
+extension Text: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
         self.value = value
-    }
-    
-    public var description: String {
-        return "\(self.value)"
     }
 }
 
 /// 一个浮点值，存储为 8 字节的 IEEE 浮点数字。
 /// 对应`Swift`中`Float Double`
 public struct Real: CustomDBType {
-    var value: Float
+    var value: Double
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -100,15 +97,21 @@ public struct Real: CustomDBType {
     }
 }
 
-extension Real: ExpressibleByFloatLiteral, CustomStringConvertible {
-    public typealias FloatLiteralType = Float
+extension Real: ExpressibleByFloatLiteral {
+    public typealias FloatLiteralType = Double
     public init(floatLiteral value: Self.FloatLiteralType) {
         self.value = value
     }
-    public var description: String {
-        return "\(self.value)"
-    }
 }
 
-// TODO: -
-//struct Blob: Codable { }
+
+/// 一个 blob 数据，完全根据它的输入存储。
+/// 对应`Swift`中`Data`
+struct Blob: CustomDBType {
+    var value: Data
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        value = try container.decode(CustomType.self)
+    }
+}

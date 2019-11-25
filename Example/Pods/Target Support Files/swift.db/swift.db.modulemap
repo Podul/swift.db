@@ -1,4 +1,4 @@
-framework module swift_db {
+framework module SwiftDB {
   umbrella header "swift.db-umbrella.h"
 
   export *

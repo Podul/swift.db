@@ -194,11 +194,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-swift.db_Example/Pods-swift.db_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/swift.db/swift_db.framework",
+				"${BUILT_PRODUCTS_DIR}/swift.db/SwiftDB.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/swift_db.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDB.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

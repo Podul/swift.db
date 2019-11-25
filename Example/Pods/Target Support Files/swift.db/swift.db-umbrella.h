@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double swift_dbVersionNumber;
-FOUNDATION_EXPORT const unsigned char swift_dbVersionString[];
+FOUNDATION_EXPORT double SwiftDBVersionNumber;
+FOUNDATION_EXPORT const unsigned char SwiftDBVersionString[];
 

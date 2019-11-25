@@ -36,15 +36,15 @@ struct PropertyInfo {
         case real = "REAL"
         /// 对应`Swift`中`Data`
         /// 一个 blob 数据，完全根据它的输入存储。
-//        case blob = "BLOB"
+        case blob = "BLOB"
         /// 其余暂不支持
     }
     
     // MARK: - Property
     /// 属性名
     var name: String
-    /// 是否可选
-    var isOptional: Bool = false
+    /// 是否可为空
+    var nullable: Bool = false
     /// 是否主键
     var isPrimary: Bool = false
     /// 类型
@@ -58,7 +58,7 @@ struct PropertyInfo {
         info.dbType = _readType(value)
         
         if value is _DBOptionalType {
-            info.isOptional = true
+            info.nullable = true
         }else if value is _DBPrimaryType {
             info.isPrimary = true
         }
@@ -74,6 +74,8 @@ struct PropertyInfo {
             return .text
         }else if value is _DBRealType {
             return .real
+        }else if value is _DBBlobType {
+            return .blob
         }
         return .text
     }
@@ -86,8 +88,6 @@ struct PropertyInfo {
 private protocol _DBOptionalType {}
 extension Optional: _DBOptionalType {}
 extension Optional: _DBIntegerType where Wrapped: _DBIntegerType, Wrapped: _DBPrimaryType {}
-extension Optional: _DBTextType where Wrapped: _DBTextType {}
-extension Optional: _DBRealType where Wrapped: _DBRealType {}
 
 /// `主键`
 private protocol _DBPrimaryType {}
@@ -105,11 +105,20 @@ private protocol _DBTextType {}
 extension String: _DBTextType {}
 extension NSString: _DBTextType {}
 extension Text: _DBTextType {}
+extension Optional: _DBTextType where Wrapped: _DBTextType {}
+
 
 /// 数据库`Real`类型
 private protocol _DBRealType {}
 extension Double: _DBRealType {}
 extension Float: _DBRealType {}
 extension Text: _DBRealType {}
+extension Optional: _DBRealType where Wrapped: _DBRealType {}
 
 
+/// 数据库`Blob`类型
+private protocol _DBBlobType {}
+extension Data: _DBBlobType {}
+// not support NSData
+//extension NSData: _DBBlobType {}
+extension Optional: _DBBlobType where Wrapped: _DBBlobType {}

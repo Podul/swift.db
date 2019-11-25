@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import swift_db
+import SwiftDB
 
 class ViewController: UIViewController {
 
@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        DB.Manager.open(db: "dbname.sqlite3", create: Model.self)
+        DB.Manager.open(tables: Model.self)
 
         var model = Model()
         model.name = "name111"

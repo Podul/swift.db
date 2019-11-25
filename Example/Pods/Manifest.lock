@@ -1,5 +1,5 @@
 PODS:
-  - swift.db (0.1.0)
+  - swift.db (0.1.5)
 
 DEPENDENCIES:
   - swift.db (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  swift.db: 7ba88f4c029453a412ff4f62f24324b4c7e5a626
+  swift.db: 0f82e51f869104d8efeddf40997e2c1fb4ddf5c8
 
-PODFILE CHECKSUM: 10e59be0e6de5ceb900a196f4b792513abe7cc39
+PODFILE CHECKSUM: 6ea9aa951f3fb080ce41708be5aba1b700396e91
 
-COCOAPODS: 1.8.1
+COCOAPODS: 1.7.1

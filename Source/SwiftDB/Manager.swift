@@ -43,126 +43,61 @@ import Foundation
 public enum DB {
     public struct Manager {
         
-        private static var db: DataBase?
+        private static var _db: DataBase!
         
         /// 打开指定数据库，如果数据库不存在则创建
-        public static func open(db name: String? = nil, create tables: DataBaseModel.Type...) {
-            db?.closeDB()
-            if let name = name {
-                db = DataBase(name)
+        public static func open(db path: String? = nil, tables: DataBaseModel.Type...) {
+            _db?.closeDB()
+            
+            if let path = path {
+                _db = DataBase(path, tables: tables)
             }else {
-                db = DataBase.default
+                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
+                _db = DataBase(path + "/defalut.sqlite3", tables: tables)
             }
-            db?.create(tables)
         }
         
         /// 插入（增）
         @discardableResult
         public static func insert(_ model: DataBaseModel) -> Bool {
-            var keys = ""
-            var values = ""
-            for (key, value) in model.db_dictValue {
-                let infos = model.fieldInfos.filter { $0.name == key && $0.isPrimary }
-                if infos.count > 0 { continue }
-                
-                keys.append(key + " ,")
-                values.append("'\(value)' ,")
-            }
-            keys.removeLast()
-            values.removeLast()
-            
-            let insertSql = "INSERT INTO \(model.tableName) (\(keys)) VALUES (\(values));"
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            if !db.exec(insertSql) {
-                print(insertSql)
-                return false
-            }
-            return true
+            return _db.insert(model)
         }
         
         /// 删除（删）
         @discardableResult
         public static func delete(_ model: DataBaseModel) -> Bool {
-            let deleteSql = "DELETE FROM \(model.tableName) WHERE id = \(model.id);"
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            if !db.exec(deleteSql) {
-                print(deleteSql)
-                return false
-            }
-            return true
+            return _db.delete(model)
         }
         
         /// 修改（改）
         @discardableResult
         public static func update(_ model: DataBaseModel) -> Bool {
-            var sql = ""
-            for (key, value) in model.db_dictValue {
-                let s = "\(key) = '\(value)',"
-                sql.append(s)
-            }
-            sql.removeLast()
-            
-            let updateSql = "UPDATE \(model.tableName) SET \(sql) WHERE id = \(model.id);"
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            if !db.exec(updateSql) {
-                print(updateSql)
-                return false
-            }
-            return true
+            return _db.update(model)
         }
 
-        /// 查询
+        /// 查询（查）
         @discardableResult
         public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DataBaseModel {
-            let whereSql = (sql.count == 0) ? "" : "WHERE \(sql)"
-            let querySql = "SELECT * FROM \(model.tableName) \(whereSql);"
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            let queryResult = db.query(querySql)
-            
-            do {
-                let data = try JSONSerialization.data(withJSONObject: queryResult, options: .prettyPrinted)
-                return try JSONDecoder().decode([T].self, from: data)
-            } catch {
-                print(queryResult)
-                print(error)
-                return [T]()
-            }
+            return _db.query(model, where: sql)
         }
         
         /// 查询
         /// 如果需要更复杂的功能，请使用该方法
         @discardableResult
         public static func query(_ sql: String) -> [Any] {
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            return db.query(sql)
+            return _db.query(sql)
         }
         
         /// 除查询外所有方法
         /// 如果需要更复杂的功能，请使用该方法
         @discardableResult
         public static func exec(_ sql: String) -> Bool {
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            return db.exec(sql)
+            return _db.exec(sql)
         }
         
         /// 关闭数据库
         public static func close() -> Bool {
-            guard let db = db else {
-                fatalError("db does not opened")
-            }
-            return db.closeDB()
+            return _db.closeDB()
         }
     }
 }
