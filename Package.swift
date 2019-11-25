@@ -10,7 +10,8 @@ let package = Package(
             targets: ["SwiftDB"])
     ],
     targets: [
-        .target(name: "SwiftDB", path: "Source")
+        .target(name: "SwiftDB")
+        //.target(name: "SwiftDB", path: "Source")
     ],
     swiftLanguageVersions: [.v5]
 )
