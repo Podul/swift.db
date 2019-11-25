@@ -32,7 +32,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'Source/Classes/**/*'
+  s.source_files = 'Source/SwiftDB/**/*'
 
   # s.resource_bundles = {
   #   'swift.db' => ['swift.db/Assets/*.png']

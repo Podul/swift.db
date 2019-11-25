@@ -7,7 +7,7 @@ let package = Package(
     products: [
         .library(
             name: "SwiftDB",
-            targets: ["swift.db"])
+            targets: ["SwiftDB"])
     ],
     targets: [
         .target(name: "SwiftDB", path: "Source")
