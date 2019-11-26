@@ -16,16 +16,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        DBManager.open(tables: Model.self)
+        DB.Manager.open(tables: Model.self)
 
         var model = Model()
         model.name = "name111"
         model.text = "text111"
-        DBManager.insert(model)
+        DB.Manager.insert(model)
         
         model.text = "text222"
         model.id = 1
-        DBManager.update(model)
+        DB.Manager.update(model)
         
     }
 

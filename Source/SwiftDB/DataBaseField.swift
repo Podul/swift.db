@@ -10,7 +10,9 @@ import Foundation
 
 protocol CustomDBType: Codable, CustomStringConvertible, CustomDebugStringConvertible {
     associatedtype CustomType: Codable
+    
     var value: CustomType { set get }
+    init(_ value: CustomType)
 }
 
 extension CustomDBType {
@@ -26,6 +28,7 @@ extension CustomDBType {
     public var debugDescription: String {
         return description
     }
+    
 }
 
 
@@ -40,6 +43,10 @@ public enum DB {
             let container = try decoder.singleValueContainer()
             value = try container.decode(CustomType.self)
         }
+        
+        public init(_ value: Int) {
+            self.value = value
+        }
     }
 
     /// 一个带符号的整数，根据值的大小存储在 1、2、3、4、6 或 8 字节中。
@@ -50,6 +57,10 @@ public enum DB {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             value = try container.decode(CustomType.self)
+        }
+        
+        public init(_ value: Int) {
+            self.value = value
         }
     }
 
@@ -62,6 +73,10 @@ public enum DB {
             let container = try decoder.singleValueContainer()
             value = try container.decode(CustomType.self)
         }
+        
+        public init(_ value: String) {
+            self.value = value
+        }
     }
 
     /// 一个浮点值，存储为 8 字节的 IEEE 浮点数字。
@@ -72,6 +87,10 @@ public enum DB {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             value = try container.decode(CustomType.self)
+        }
+        
+        public init(_ value: Double) {
+            self.value = value
         }
     }
 
@@ -84,6 +103,10 @@ public enum DB {
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
             value = try container.decode(CustomType.self)
+        }
+        
+        public init(_ value: Data) {
+            self.value = value
         }
     }
 
