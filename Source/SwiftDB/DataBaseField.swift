@@ -124,24 +124,23 @@ extension DB.Real: ExpressibleByFloatLiteral {
 
 // MARK: - <#mark#>
 extension Int {
-    init(_ value: DB.Primary) {
+    public init(_ value: DB.Primary) {
         self.init(value.value)
     }
     
-    init (_ value: DB.Integer) {
+    public init (_ value: DB.Integer) {
         self.init(value.value)
     }
-    
 }
 
 extension String {
-    init(_ value: DB.Text) {
+    public init(_ value: DB.Text) {
         self.init(value.value)
     }
 }
 
 extension Double {
-    init(_ value: DB.Real) {
+    public init(_ value: DB.Real) {
         self.init(value.value)
     }
 }
