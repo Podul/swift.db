@@ -70,40 +70,6 @@ public protocol DataBaseModel: Codable {
     init()
 }
 
-extension DataBaseModel {
-    var tableName: String {
-        return "\(type(of: self))"
-    }
-    static var tableName: String {
-        return "\(self.self)"
-    }
-    
-    /// 字段信息
-    var fieldInfos: [PropertyInfo] {
-        let mirror = Mirror(reflecting: self)
-        var field = [PropertyInfo]()
-        for (label, value) in mirror.children {
-            guard let label = label else { continue }
-            field.append(PropertyInfo.info(with: label, value: value))
-        }
-        return field
-    }
-    
-    /// To Dictionary
-    var db_dictValue: [String: Any] {
-        guard let data = try? JSONEncoder().encode(self) else {
-            print(self)
-            return [:]
-        }
-        guard let dict = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {
-            print(self)
-            return [:]
-        }
-        return dict
-    }
-}
-
-
 // MARK: - 数据库
 final class DataBase {
     
@@ -136,7 +102,7 @@ final class DataBase {
     private func _savedTableInfos(by tables: [DataBaseModel.Type]) {
         for table in tables {
             let t = table.init()
-            tableInfos[t.tableName] = t.fieldInfos
+            tableInfos[t.tableName] = t.propertyInfos
         }
     }
     
@@ -175,7 +141,7 @@ final class DataBase {
         var keys = ""
         var values = ""
         for (key, value) in model.db_dictValue {
-            let infos = model.fieldInfos.filter { $0.name == key && $0.isPrimary }
+            let infos = model.propertyInfos.filter { $0.name == key && $0.isPrimary }
             if infos.count > 0 { continue }
             
             keys.append(key + " ,")

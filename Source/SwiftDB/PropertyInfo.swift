@@ -60,7 +60,9 @@ struct PropertyInfo {
         if value is _DBOptionalType {
             info.nullable = true
         }
+        
         if value is _DBPrimaryType {
+            // 主键不会为空
             info.isPrimary = true
             info.nullable = false
         }
@@ -80,6 +82,40 @@ struct PropertyInfo {
             return .blob
         }
         return .text
+    }
+}
+
+extension DataBaseModel {
+    var tableName: String {
+        return "\(type(of: self))"
+    }
+    
+    static var tableName: String {
+        return "\(self.self)"
+    }
+    
+    /// To Dictionary
+    var db_dictValue: [String: Any] {
+        guard let data = try? JSONEncoder().encode(self) else {
+            print(self)
+            return [:]
+        }
+        guard let dict = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else {
+            print(self)
+            return [:]
+        }
+        return dict
+    }
+    
+    /// 字段信息
+    var propertyInfos: [PropertyInfo] {
+        let mirror = Mirror(reflecting: self)
+        var field = [PropertyInfo]()
+        for (label, value) in mirror.children {
+            guard let label = label else { continue }
+            field.append(PropertyInfo.info(with: label, value: value))
+        }
+        return field
     }
 }
 
