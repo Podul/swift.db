@@ -66,7 +66,7 @@ import SQLite3
 
 
 public protocol DataBaseModel: Codable {
-    var id: DB.Primary { get }
+    var id: DB.Primary? { get }
     init()
 }
 
@@ -195,7 +195,7 @@ final class DataBase {
     /// 删除（删）
     @discardableResult
     func delete(_ model: DataBaseModel) -> Bool {
-        let deleteSql = "DELETE FROM \(model.tableName) WHERE id = \(model.id);"
+        let deleteSql = "DELETE FROM \(model.tableName) WHERE id = \(model.id!);"
         if !_db.exec(deleteSql) {
             print(deleteSql)
             return false

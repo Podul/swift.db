@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 
 
 struct Model: DataBaseModel {
-    var id: DB.Primary = 0
+    var id: DB.Primary?
     var name: String = "name"
     var text: DB.Text = "text"
     var optional: String? = nil

@@ -35,7 +35,7 @@ extension CustomDBType {
 // MARK: - <#mark#>
 public enum DB {
 
-    /// 主键，不要加`?`号（不可为 `Optional` 类型）
+    /// 主键，加了`?<Optional类型>`号也是`NOTNULL`
      public struct Primary: CustomDBType {
         var value: Int
         
