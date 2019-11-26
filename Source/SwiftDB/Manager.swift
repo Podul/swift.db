@@ -16,7 +16,7 @@ import Foundation
 ///
 /// ```
 /// struct Model: DataBaseModel {
-///     var id: Primary = 0
+///     var id: PRIMARY = 0
 ///     var name: String = "name"
 ///     var text: Text = "text"
 ///     ...
@@ -25,7 +25,7 @@ import Foundation
 /// DB.Manager.open(db: "dbname.sqlite3", create: Model.self)
 ///
 /// struct Model: DataBaseModel {
-///     var id: Primary = 0
+///     var id: PRIMARY = 0
 ///     var name: String = "name"
 ///     var text: Text = "text"
 ///     var optional: String? = nil
@@ -40,8 +40,11 @@ import Foundation
 /// ...
 /// ```
 ///
-
-extension DB {
+/// `Warning`
+/// 目前不支持复杂查询，如 `SELECT COUNT(*) FROME ....`
+///
+///
+public enum DB {
 
     public struct Manager {
         
@@ -61,19 +64,19 @@ extension DB {
         
         /// 插入（增）
         @discardableResult
-        public static func insert(_ model: DataBaseModel) -> Bool {
+        public static func insert(_ model: DataBaseModel) -> Swift.Bool {
             return _db.insert(model)
         }
         
         /// 删除（删）
         @discardableResult
-        public static func delete(_ model: DataBaseModel) -> Bool {
+        public static func delete(_ model: DataBaseModel) -> Swift.Bool {
             return _db.delete(model)
         }
         
         /// 修改（改）
         @discardableResult
-        public static func update(_ model: DataBaseModel) -> Bool {
+        public static func update(_ model: DataBaseModel) -> Swift.Bool {
             return _db.update(model)
         }
         
@@ -93,12 +96,12 @@ extension DB {
         /// 除查询外所有方法
         /// 如果需要更复杂的功能，请使用该方法
         @discardableResult
-        public static func exec(_ sql: String) -> Bool {
+        public static func exec(_ sql: String) -> Swift.Bool {
             return _db.exec(sql)
         }
         
         /// 关闭数据库
-        public static func close() -> Bool {
+        public static func close() -> Swift.Bool {
             return _db.closeDB()
         }
     }

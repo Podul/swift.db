@@ -135,7 +135,9 @@ extension Optional: _DBPrimaryType where Wrapped: _DBPrimaryType {}
 /// 数据库`Integer`类型
 private protocol _DBIntegerType {}
 extension Int: _DBIntegerType {}
+extension Swift.Bool: _DBIntegerType {}
 extension UInt: _DBIntegerType {}
+extension DB.Bool: _DBIntegerType {}
 extension DB.Integer: _DBIntegerType {}
 extension DB.Primary: _DBIntegerType {}
 
@@ -162,3 +164,4 @@ extension DB.Blob: _DBBlobType {}
 // not support NSData
 //extension NSData: _DBBlobType {}
 extension Optional: _DBBlobType where Wrapped: _DBBlobType {}
+

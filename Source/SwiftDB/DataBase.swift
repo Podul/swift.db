@@ -179,7 +179,7 @@ final class DataBase {
         }
         sql.removeLast()
         
-        let updateSql = "UPDATE \(model.tableName) SET \(sql) WHERE id = \(model.id);"
+        let updateSql = "UPDATE \(model.tableName) SET \(sql) WHERE id = \(model.id!);"
         if !_db.exec(updateSql) {
             print(updateSql)
             return false
