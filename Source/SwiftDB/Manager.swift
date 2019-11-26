@@ -105,3 +105,26 @@ extension DB {
 
 }
 
+
+/// 数据库操作
+extension DataBaseModel {
+    @discardableResult
+    public func insert() -> Bool {
+        return DB.Manager.insert(self)
+    }
+    
+    @discardableResult
+    public func update() -> Bool {
+        return DB.Manager.update(self)
+    }
+    
+    @discardableResult
+    public func delete() -> Bool {
+        return DB.Manager.delete(self)
+    }
+    
+    @discardableResult
+    static public func query(where sql: String) -> [Self] {
+        return DB.Manager.query(self, where: sql)
+    }
+}
