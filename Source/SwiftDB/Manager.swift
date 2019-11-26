@@ -124,7 +124,7 @@ extension DataBaseModel {
     }
     
     @discardableResult
-    static public func query(where sql: String) -> [Self] {
+    static public func query(where sql: String = "") -> [Self] {
         return DB.Manager.query(self, where: sql)
     }
 }
