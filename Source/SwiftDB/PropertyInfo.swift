@@ -91,20 +91,20 @@ extension Optional: _DBIntegerType where Wrapped: _DBIntegerType, Wrapped: _DBPr
 
 /// `主键`
 private protocol _DBPrimaryType {}
-extension Primary: _DBPrimaryType {}
+extension DB.Primary: _DBPrimaryType {}
 
 /// 数据库`Integer`类型
 private protocol _DBIntegerType {}
 extension Int: _DBIntegerType {}
 extension UInt: _DBIntegerType {}
-extension Integer: _DBIntegerType {}
-extension Primary: _DBIntegerType {}
+extension DB.Integer: _DBIntegerType {}
+extension DB.Primary: _DBIntegerType {}
 
 /// 数据库`Text`类型
 private protocol _DBTextType {}
 extension String: _DBTextType {}
 extension NSString: _DBTextType {}
-extension Text: _DBTextType {}
+extension DB.Text: _DBTextType {}
 extension Optional: _DBTextType where Wrapped: _DBTextType {}
 
 
@@ -112,13 +112,14 @@ extension Optional: _DBTextType where Wrapped: _DBTextType {}
 private protocol _DBRealType {}
 extension Double: _DBRealType {}
 extension Float: _DBRealType {}
-extension Text: _DBRealType {}
+extension DB.Text: _DBRealType {}
 extension Optional: _DBRealType where Wrapped: _DBRealType {}
 
 
 /// 数据库`Blob`类型
 private protocol _DBBlobType {}
 extension Data: _DBBlobType {}
+extension DB.Blob: _DBBlobType {}
 // not support NSData
 //extension NSData: _DBBlobType {}
 extension Optional: _DBBlobType where Wrapped: _DBBlobType {}

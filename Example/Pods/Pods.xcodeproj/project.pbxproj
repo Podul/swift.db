@@ -14,7 +14,7 @@
 		2069D03C1233B4151E981BB16012BE5B /* swift.db-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 76DEBD47652FCD372DB718C26C64551C /* swift.db-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5BF56CA579DA798C6F02759ABFD883E1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		600DBE7598A4D8D6B5F815E5EA43E810 /* Pods-swift.db_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DD5555F613C03A8C9785BE5CEA3612A2 /* Pods-swift.db_Example-dummy.m */; };
-		788A0CD9238BF6BC0040D8E7 /* _DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788A0CD7238BF6B80040D8E7 /* _DataBase.swift */; };
+		78E3F726238CBD480005747F /* _DataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E3F725238CBD480005747F /* _DataBase.swift */; };
 		85B73ECFD7C520C00B568EC56C8943F8 /* Pods-swift.db_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 575331876BF7C4E1132110E9FC31F8DF /* Pods-swift.db_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9A288FAB26FDF57209A73FFDDCD926BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
 		E667A7E83F72BBB45D235F8F7BE30050 /* swift.db-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6779E94906F1ACE1DA5674F906E2E632 /* swift.db-dummy.m */; };
@@ -43,7 +43,7 @@
 		6779E94906F1ACE1DA5674F906E2E632 /* swift.db-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "swift.db-dummy.m"; sourceTree = "<group>"; };
 		70C24F58707F4EAC9ACC54175359133D /* DataBaseField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataBaseField.swift; path = Source/SwiftDB/DataBaseField.swift; sourceTree = "<group>"; };
 		76DEBD47652FCD372DB718C26C64551C /* swift.db-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "swift.db-umbrella.h"; sourceTree = "<group>"; };
-		788A0CD7238BF6B80040D8E7 /* _DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = _DataBase.swift; sourceTree = "<group>"; };
+		78E3F725238CBD480005747F /* _DataBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = _DataBase.swift; path = Source/SwiftDB/_DataBase.swift; sourceTree = "<group>"; };
 		80A9F7315B415FF899FB552BB28F2936 /* PropertyInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PropertyInfo.swift; path = Source/SwiftDB/PropertyInfo.swift; sourceTree = "<group>"; };
 		92EF7C9DF761DAB96E01703BAC00A47B /* Manager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Manager.swift; path = Source/SwiftDB/Manager.swift; sourceTree = "<group>"; };
 		94B45EA4B8172E55A8081CC6EB192458 /* Pods-swift.db_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-swift.db_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,8 +92,8 @@
 		39FD7A6C31E56E9D4BBE5AB8D548AB34 /* swift.db */ = {
 			isa = PBXGroup;
 			children = (
-				788A0CD7238BF6B80040D8E7 /* _DataBase.swift */,
 				B98FEC48A409D370BB027CFA61F27602 /* DataBase.swift */,
+				78E3F725238CBD480005747F /* _DataBase.swift */,
 				70C24F58707F4EAC9ACC54175359133D /* DataBaseField.swift */,
 				92EF7C9DF761DAB96E01703BAC00A47B /* Manager.swift */,
 				80A9F7315B415FF899FB552BB28F2936 /* PropertyInfo.swift */,
@@ -313,7 +313,7 @@
 				03CA291C61E36C7FEC6F5D247925D3EB /* DataBaseField.swift in Sources */,
 				13E290CEC1A2AC144645AB22D632507C /* Manager.swift in Sources */,
 				0597FAAC99979A300826FF84C3BC363A /* PropertyInfo.swift in Sources */,
-				788A0CD9238BF6BC0040D8E7 /* _DataBase.swift in Sources */,
+				78E3F726238CBD480005747F /* _DataBase.swift in Sources */,
 				E667A7E83F72BBB45D235F8F7BE30050 /* swift.db-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

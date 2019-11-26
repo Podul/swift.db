@@ -40,64 +40,64 @@ import Foundation
 /// ...
 /// ```
 ///
-public enum DB {
-    public struct Manager {
-        
-        private static var _db: DataBase!
-        
-        /// 打开指定数据库，如果数据库不存在则创建
-        public static func open(db path: String? = nil, tables: DataBaseModel.Type...) {
-            _db?.closeDB()
-            
-            if let path = path {
-                _db = DataBase(path, tables: tables)
-            }else {
-                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
-                _db = DataBase(path + "/defalut.sqlite3", tables: tables)
-            }
-        }
-        
-        /// 插入（增）
-        @discardableResult
-        public static func insert(_ model: DataBaseModel) -> Bool {
-            return _db.insert(model)
-        }
-        
-        /// 删除（删）
-        @discardableResult
-        public static func delete(_ model: DataBaseModel) -> Bool {
-            return _db.delete(model)
-        }
-        
-        /// 修改（改）
-        @discardableResult
-        public static func update(_ model: DataBaseModel) -> Bool {
-            return _db.update(model)
-        }
 
-        /// 查询（查）
-        @discardableResult
-        public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DataBaseModel {
-            return _db.query(model, where: sql)
-        }
+public struct DBManager {
+    
+    private static var _db: DataBase!
+    
+    /// 打开指定数据库，如果数据库不存在则创建
+    public static func open(db path: String? = nil, tables: DataBaseModel.Type...) {
+        _db?.closeDB()
         
-        /// 查询
-        /// 如果需要更复杂的功能，请使用该方法
-        @discardableResult
-        public static func query(_ sql: String) -> [Any] {
-            return _db.query(sql)
-        }
-        
-        /// 除查询外所有方法
-        /// 如果需要更复杂的功能，请使用该方法
-        @discardableResult
-        public static func exec(_ sql: String) -> Bool {
-            return _db.exec(sql)
-        }
-        
-        /// 关闭数据库
-        public static func close() -> Bool {
-            return _db.closeDB()
+        if let path = path {
+            _db = DataBase(path, tables: tables)
+        }else {
+            let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last ?? ""
+            _db = DataBase(path + "/defalut.sqlite3", tables: tables)
         }
     }
+    
+    /// 插入（增）
+    @discardableResult
+    public static func insert(_ model: DataBaseModel) -> Bool {
+        return _db.insert(model)
+    }
+    
+    /// 删除（删）
+    @discardableResult
+    public static func delete(_ model: DataBaseModel) -> Bool {
+        return _db.delete(model)
+    }
+    
+    /// 修改（改）
+    @discardableResult
+    public static func update(_ model: DataBaseModel) -> Bool {
+        return _db.update(model)
+    }
+    
+    /// 查询（查）
+    @discardableResult
+    public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DataBaseModel {
+        return _db.query(model, where: sql)
+    }
+    
+    /// 查询
+    /// 如果需要更复杂的功能，请使用该方法
+    @discardableResult
+    public static func query(_ sql: String) -> [Any] {
+        return _db.query(sql)
+    }
+    
+    /// 除查询外所有方法
+    /// 如果需要更复杂的功能，请使用该方法
+    @discardableResult
+    public static func exec(_ sql: String) -> Bool {
+        return _db.exec(sql)
+    }
+    
+    /// 关闭数据库
+    public static func close() -> Bool {
+        return _db.closeDB()
+    }
 }
+

@@ -16,16 +16,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         
-        DB.Manager.open(tables: Model.self)
+        DBManager.open(tables: Model.self)
 
         var model = Model()
         model.name = "name111"
         model.text = "text111"
-        DB.Manager.insert(model)
+        DBManager.insert(model)
         
         model.text = "text222"
         model.id = 1
-        DB.Manager.update(model)
+        DBManager.update(model)
         
     }
 
@@ -39,9 +39,9 @@ class ViewController: UIViewController {
 
 
 struct Model: DataBaseModel {
-    var id: Primary = 0
+    var id: DB.Primary = 0
     var name: String = "name"
-    var text: Text = "text"
+    var text: DB.Text = "text"
     var optional: String? = nil
 }
 

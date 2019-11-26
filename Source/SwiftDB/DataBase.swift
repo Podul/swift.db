@@ -66,7 +66,7 @@ import SQLite3
 
 
 public protocol DataBaseModel: Codable {
-    var id: Primary { get }
+    var id: DB.Primary { get }
     init()
 }
 
