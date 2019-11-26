@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'swift.db'
-  s.version          = '0.1.5'
+  s.version          = '0.2.0'
   s.summary          = '用 Swift 方式封装 SQLite'
   s.swift_version 	 = '5.0'
   s.module_name      = 'SwiftDB'
