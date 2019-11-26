@@ -59,8 +59,10 @@ struct PropertyInfo {
         
         if value is _DBOptionalType {
             info.nullable = true
-        }else if value is _DBPrimaryType {
+        }
+        if value is _DBPrimaryType {
             info.isPrimary = true
+            info.nullable = false
         }
         
         return info
@@ -92,6 +94,7 @@ extension Optional: _DBIntegerType where Wrapped: _DBIntegerType, Wrapped: _DBPr
 /// `主键`
 private protocol _DBPrimaryType {}
 extension DB.Primary: _DBPrimaryType {}
+extension Optional: _DBPrimaryType where Wrapped: _DBPrimaryType {}
 
 /// 数据库`Integer`类型
 private protocol _DBIntegerType {}
