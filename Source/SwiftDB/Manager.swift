@@ -10,12 +10,12 @@ import Foundation
 
 ///
 /// # 使用方法：
-/// 1. 首先，你需要创建遵守`DataBaseModel`协议的模型，你可以使用一些基础类型，e.g. `Int` `String` `Float`等，也可以使用`Text` `Integer`等数据库支持的类型。
+/// 1. 首先，你需要创建遵守`DB.Model`协议的模型，你可以使用一些基础类型，e.g. `Int` `String` `Float`等，也可以使用`Text` `Integer`等数据库支持的类型。
 /// 2. 然后调用 `DB.Manager.open(db name:, andCreate:)`方法创建并打开数据库
 /// 3. 最后就可以调用`DB.Manager.insert`等方法进行数据库操作了
 ///
 /// ```
-/// struct Model: DataBaseModel {
+/// struct Model: DB.Model {
 ///     var id: PRIMARY = 0
 ///     var name: String = "name"
 ///     var text: Text = "text"
@@ -24,7 +24,7 @@ import Foundation
 ///
 /// DB.Manager.open(db: "dbname.sqlite3", create: Model.self)
 ///
-/// struct Model: DataBaseModel {
+/// struct Model: DB.Model {
 ///     var id: PRIMARY = 0
 ///     var name: String = "name"
 ///     var text: Text = "text"
@@ -51,7 +51,7 @@ public enum DB {
         private static var _db: DataBase!
         
         /// 打开指定数据库，如果数据库不存在则创建
-        public static func open(db path: String? = nil, tables: DataBaseModel.Type...) {
+        public static func open(db path: String? = nil, tables: DB.Model.Type...) {
             _db?.closeDB()
             
             if let path = path {
@@ -64,25 +64,25 @@ public enum DB {
         
         /// 插入（增）
         @discardableResult
-        public static func insert(_ model: DataBaseModel) -> Swift.Bool {
+        public static func insert(_ model: DB.Model) -> Swift.Bool {
             return _db.insert(model)
         }
         
         /// 删除（删）
         @discardableResult
-        public static func delete(_ model: DataBaseModel) -> Swift.Bool {
+        public static func delete(_ model: DB.Model) -> Swift.Bool {
             return _db.delete(model)
         }
         
         /// 修改（改）
         @discardableResult
-        public static func update(_ model: DataBaseModel) -> Swift.Bool {
+        public static func update(_ model: DB.Model) -> Swift.Bool {
             return _db.update(model)
         }
         
         /// 查询（查）
         @discardableResult
-        public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DataBaseModel {
+        public static func query<T>(_ model: T.Type, where sql: String = "") -> [T] where T: DB.Model {
             return _db.query(model, where: sql)
         }
         
@@ -110,7 +110,7 @@ public enum DB {
 
 
 /// 数据库操作
-extension DataBaseModel {
+extension DB.Model {
     @discardableResult
     public func insert() -> Bool {
         return DB.Manager.insert(self)

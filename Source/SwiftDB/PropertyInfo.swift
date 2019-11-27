@@ -55,7 +55,13 @@ struct PropertyInfo {
     static func info(with label: String, value: Any) -> PropertyInfo {
         
         var info = PropertyInfo(name: label)
-        info.dbType = _readType(value)
+        
+        // 枚举需特殊处理
+        if let value = value as? DB.Enum {
+            info.dbType = _readEnumType(value)
+        }else {
+            info.dbType = _readType(value)
+        }
         
         if value is _DBOptionalType {
             info.nullable = true
@@ -72,20 +78,28 @@ struct PropertyInfo {
     
     /// 读取类型信息
     private static func _readType(_ value: Any) -> DBType {
-        if value is _DBIntegerType {
-            return .integer
-        }else if value is _DBTextType {
-            return .text
-        }else if value is _DBRealType {
-            return .real
-        }else if value is _DBBlobType {
-            return .blob
+        switch value {
+            case is _DBIntegerType: return .integer
+            case is _DBTextType: return .text
+            case is _DBRealType: return .real
+            case is _DBBlobType: return .blob
+            default: fatalError("\(type(of: value)) not supports DataBase！")
         }
-        return .text
+    }
+    
+    private static func _readEnumType(_ value: DB.Enum) -> DBType {
+        let valueType = type(of: value).valueType
+        switch valueType {
+            case is _DBIntegerType.Type: return .integer
+            case is _DBTextType.Type: return .text
+            case is _DBRealType.Type: return .real
+            case is _DBBlobType.Type: return .blob
+            default: fatalError("\(type(of: value)) not supports DataBase！")
+        }
     }
 }
 
-extension DataBaseModel {
+extension DB.Model {
     var tableName: String {
         return "\(type(of: self))"
     }
@@ -161,7 +175,5 @@ extension Optional: _DBRealType where Wrapped: _DBRealType {}
 private protocol _DBBlobType {}
 extension Data: _DBBlobType {}
 extension DB.Blob: _DBBlobType {}
-// not support NSData
-//extension NSData: _DBBlobType {}
 extension Optional: _DBBlobType where Wrapped: _DBBlobType {}
 

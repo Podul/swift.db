@@ -71,9 +71,7 @@ final internal class _DataBase {
             var i: Int32 = 0
             // 字段名
             while let cName = sqlite3_column_name(pStmt, i) {
-                defer {
-                    i = i + 1
-                }
+                defer { i = i + 1 }
                 let fieldName = String(cString: cName)
                 // 字段类型
                 let type = sqlite3_column_type(pStmt, i)
@@ -90,8 +88,7 @@ final internal class _DataBase {
                 case SQLITE_BLOB:
                     guard let blobValue = sqlite3_column_blob(pStmt, i) else { continue }
                     dict[fieldName] = Data(bytes: blobValue, count: Int(sqlite3_column_bytes(pStmt, i)))
-                default:
-                    break
+                default: break
                 }
             }
             arr.append(dict)

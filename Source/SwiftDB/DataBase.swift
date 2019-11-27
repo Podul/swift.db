@@ -65,10 +65,6 @@ import SQLite3
 
 
 
-public protocol DataBaseModel: Codable {
-    var id: DB.Primary? { get }
-    init()
-}
 
 // MARK: - 数据库
 final class DataBase {
@@ -77,7 +73,7 @@ final class DataBase {
     /// 所有表名
     private lazy var tableInfos = [String: [PropertyInfo]]()
     
-    init(_ dbPath: String, tables: [DataBaseModel.Type]) {
+    init(_ dbPath: String, tables: [DB.Model.Type]) {
         // 打开数据库
         _db = _DataBase(dbPath)
         // 创建表
@@ -90,7 +86,7 @@ final class DataBase {
     
     // MARK: - Private
     /// 新建表
-    func _create(_ tables: [DataBaseModel.Type]) {
+    func _create(_ tables: [DB.Model.Type]) {
         // 保存表的信息
         _savedTableInfos(by: tables)
         
@@ -99,7 +95,7 @@ final class DataBase {
     }
     
     /// 保存表的信息
-    private func _savedTableInfos(by tables: [DataBaseModel.Type]) {
+    private func _savedTableInfos(by tables: [DB.Model.Type]) {
         for table in tables {
             let t = table.init()
             tableInfos[t.tableName] = t.propertyInfos
@@ -137,7 +133,7 @@ final class DataBase {
     // MARK: - 数据库操作
     /// 插入（增）
     @discardableResult
-    func insert(_ model: DataBaseModel) -> Bool {
+    func insert(_ model: DB.Model) -> Bool {
         var keys = ""
         var values = ""
         for (key, value) in model.db_dictValue {
@@ -160,7 +156,7 @@ final class DataBase {
     
     /// 删除（删）
     @discardableResult
-    func delete(_ model: DataBaseModel) -> Bool {
+    func delete(_ model: DB.Model) -> Bool {
         let deleteSql = "DELETE FROM \(model.tableName) WHERE id = \(model.id!);"
         if !_db.exec(deleteSql) {
             print(deleteSql)
@@ -171,7 +167,7 @@ final class DataBase {
     
     /// 修改（改）
     @discardableResult
-    func update(_ model: DataBaseModel) -> Bool {
+    func update(_ model: DB.Model) -> Bool {
         var sql = ""
         for (key, value) in model.db_dictValue {
             let s = "\(key) = '\(value)',"
@@ -189,7 +185,7 @@ final class DataBase {
 
     /// 查询
     @discardableResult
-    func query<T>(_ model: T.Type, where sql: String) -> [T] where T: DataBaseModel {
+    func query<T>(_ model: T.Type, where sql: String) -> [T] where T: DB.Model {
         let whereSql = sql.isEmpty ? "" : "WHERE \(sql)"
         let querySql = "SELECT * FROM \(model.tableName) \(whereSql);"
         let queryResult = _db.query(querySql)
