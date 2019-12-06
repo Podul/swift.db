@@ -38,7 +38,7 @@ class ViewController: UIViewController {
 
 
 
-struct Model: DataBaseModel {
+struct Model: DB.Model {
     var id: DB.Primary?
     var name: String = "name"
     var text: DB.Text = "text"

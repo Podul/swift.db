@@ -1,16 +1,22 @@
 PODS:
-  - swift.db (0.1.5)
+  - PropertyDecoder (0.1.0)
+  - swift.db (0.2.0):
+    - PropertyDecoder
 
 DEPENDENCIES:
+  - PropertyDecoder (from `../../PropertyDecoder`)
   - swift.db (from `../`)
 
 EXTERNAL SOURCES:
+  PropertyDecoder:
+    :path: "../../PropertyDecoder"
   swift.db:
     :path: "../"
 
 SPEC CHECKSUMS:
-  swift.db: 0f82e51f869104d8efeddf40997e2c1fb4ddf5c8
+  PropertyDecoder: 658556238d1c1497bd475a97fe5cea58b3775add
+  swift.db: 4b97a5e580b3ec96e30b5fb31972c94a4e4decc0
 
-PODFILE CHECKSUM: 6ea9aa951f3fb080ce41708be5aba1b700396e91
+PODFILE CHECKSUM: 8a88198a890ec52c6af33bce4a245cb1abf94383
 
 COCOAPODS: 1.7.1

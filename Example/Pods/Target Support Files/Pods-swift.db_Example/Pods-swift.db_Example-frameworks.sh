@@ -161,9 +161,11 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/PropertyDecoder/PropertyDecoder.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/swift.db/SwiftDB.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/PropertyDecoder/PropertyDecoder.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/swift.db/SwiftDB.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

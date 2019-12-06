@@ -7,21 +7,11 @@
 //  数据库字段（自定义类型）
 
 import Foundation
-
+import PropertyDecoder
 
 
 // MARK: - <#mark#>
 extension DB {
-
-    /// 主键，加了`?<Optional类型>`号也是`NOTNULL`
-     public struct Primary: CustomDBType {
-        public var value: Int
-        
-        public init(_ value: Int) {
-            self.value = value
-        }
-    }
-
     /// 一个带符号的整数，根据值的大小存储在 1、2、3、4、6 或 8 字节中。
     /// 对应`Swift`中所有整型`（Int, UInt, Int8 ....）`
     public struct Integer: CustomDBType {
@@ -85,13 +75,6 @@ extension DB {
 }
 
 // MARK: - <#mark#>
-extension DB.Primary: ExpressibleByIntegerLiteral {
-    public typealias IntegerLiteralType = Int
-
-    public init(integerLiteral value: Int) {
-        self.value = value
-    }
-}
 
 extension DB.Integer: ExpressibleByIntegerLiteral {
     public typealias IntegerLiteralType = Int
@@ -101,12 +84,21 @@ extension DB.Integer: ExpressibleByIntegerLiteral {
     }
 }
 
+extension DB.Integer: AnyDecodable {
+    public static func defaultValue() -> DB.Integer { 0 }
+}
+
+
 extension DB.Text: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
     
     public init(stringLiteral value: String) {
         self.value = value
     }
+}
+
+extension DB.Text: AnyDecodable {
+    public static func defaultValue() -> DB.Text { "0" }
 }
 
 extension DB.Real: ExpressibleByFloatLiteral {
@@ -116,6 +108,11 @@ extension DB.Real: ExpressibleByFloatLiteral {
     }
 }
 
+extension DB.Real: AnyDecodable {
+    public static func defaultValue() -> DB.Real { 0.0 }
+}
+
+
 extension DB.Bool: ExpressibleByBooleanLiteral {
     public typealias BooleanLiteralType = Swift.Bool
     public init(booleanLiteral value: Self.BooleanLiteralType) {
@@ -123,34 +120,9 @@ extension DB.Bool: ExpressibleByBooleanLiteral {
     }
 }
 
-
-// MARK: - <#mark#>
-extension Int {
-    public init(_ value: DB.Primary) {
-        self.init(value.value)
-    }
-    
-    public init (_ value: DB.Integer) {
-        self.init(value.value)
-    }
+extension DB.Bool: AnyDecodable {
+    public static func defaultValue() -> DB.Bool { false }
 }
-
-extension String {
-    public init(_ value: DB.Text) {
-        self.init(value.value)
-    }
-}
-
-extension Double {
-    public init(_ value: DB.Real) {
-        self.init(value.value)
-    }
-}
-
-
-
-
-
 
 // MARK: - <#mark#>
 protocol CustomDBType: Codable, CustomStringConvertible, CustomDebugStringConvertible {

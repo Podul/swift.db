@@ -97,21 +97,19 @@ final class DataBase {
     /// 保存表的信息
     private func _savedTableInfos(by tables: [DB.Model.Type]) {
         for table in tables {
-            let t = table.init()
-            tableInfos[t.tableName] = t.propertyInfos
+            tableInfos[table.tableName] = table.propertyInfos
         }
     }
     
     /// 创建表
     private func _createTables() {
         for (tableName, infos) in tableInfos {
-            var sql = ""
+            if infos.isEmpty { continue }
+            var sql = "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
             for info in infos {
-                // 主键不为空
-                let notNull = (info.nullable && !info.isPrimary) ? "NULL" : "NOT NULL"
-                let primary = info.isPrimary ? "PRIMARY KEY AUTOINCREMENT" : ""
-                // it likes "tableName TEXT NOT NULL PRIMARY KEY AUTOINCREMENT,"
-                let s = "\(info.name) \(info.dbType.rawValue) \(notNull) \(primary),"
+                if info.name == "id" { continue }
+                let notNull = (info.nullable) ? "NULL" : "NOT NULL"
+                let s = "\(info.name) \(info.dbType.rawValue) \(notNull),"
                 sql.append(s)
             }
             sql.removeLast()
@@ -137,8 +135,8 @@ final class DataBase {
         var keys = ""
         var values = ""
         for (key, value) in model.db_dictValue {
-            let infos = model.propertyInfos.filter { $0.name == key && $0.isPrimary }
-            if infos.count > 0 { continue }
+//            let infos = type(of: model).propertyInfos.filter { $0.name == key && $0.isPrimary }
+//            if infos.count > 0 { continue }
             
             keys.append(key + " ,")
             values.append("'\(value)' ,")

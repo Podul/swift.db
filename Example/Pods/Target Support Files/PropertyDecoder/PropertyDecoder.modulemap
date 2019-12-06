@@ -1,0 +1,6 @@
+framework module PropertyDecoder {
+  umbrella header "PropertyDecoder-umbrella.h"
+
+  export *
+  module * { export * }
+}

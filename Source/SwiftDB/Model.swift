@@ -13,12 +13,6 @@ extension DB {
     public typealias Model = DBModel
 }
 
-extension DB.Model {
-    public init(id: Int) {
-        self.init()
-        self.id = DB.Primary(integerLiteral: id)
-    }
-}
 
 
 public typealias DBCodable = Codable
@@ -28,7 +22,9 @@ public protocol DBEnum: DBCodable {
     static var valueType: Any.Type { get }
 }
 
+
 public protocol DBModel: DBCodable {
-    var id: DB.Primary? { get set }
-    init()
+//    associatedtype IDKey
+    // 主键
+    var id: Int? { get set }
 }

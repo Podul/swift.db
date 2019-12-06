@@ -7,6 +7,7 @@
 //  属性信息
 
 import Foundation
+import PropertyDecoder
 
 ///
 /// ```
@@ -46,55 +47,55 @@ struct PropertyInfo {
     /// 是否可为空
     var nullable: Bool = false
     /// 是否主键
-    var isPrimary: Bool = false
     /// 类型
     var dbType: DBType = .text
     
     
     // MARK: - Fucntion
-    static func info(with label: String, value: Any) -> PropertyInfo {
+    static func info(with label: String, valueType: Any.Type) -> PropertyInfo {
         
         var info = PropertyInfo(name: label)
         
         // 枚举需特殊处理
-        if let value = value as? DB.Enum {
-            info.dbType = _readEnumType(value)
+        if let valueType = valueType as? DB.Enum.Type {
+            info.dbType = _readEnumType(valueType)
         }else {
-            info.dbType = _readType(value)
+            info.dbType = _readType(valueType)
         }
         
-        if value is _DBOptionalType {
+        if valueType is _DBOptionalType.Type {
             info.nullable = true
         }
         
-        if value is _DBPrimaryType {
+//        label == "id"
+//        if valueType is _DBPrimaryType.Type {
             // 主键不会为空
-            info.isPrimary = true
-            info.nullable = false
-        }
+//            info.isPrimary = true
+//            info.nullable = false
+//        }
         
         return info
     }
     
     /// 读取类型信息
-    private static func _readType(_ value: Any) -> DBType {
-        switch value {
-            case is _DBIntegerType: return .integer
-            case is _DBTextType: return .text
-            case is _DBRealType: return .real
-            case is _DBBlobType: return .blob
-            default: fatalError("\(type(of: value)) not supports DataBase！")
+    private static func _readType(_ valueType: Any.Type) -> DBType {
+        switch valueType {
+        case is _DBIntegerType.Type: return .integer
+            case is _DBTextType.Type: return .text
+            case is _DBRealType.Type: return .real
+            case is _DBBlobType.Type: return .blob
+            default: fatalError("\(valueType) not supports DataBase！")
         }
     }
     
-    private static func _readEnumType(_ value: DB.Enum) -> DBType {
-        let valueType = type(of: value).valueType
+    private static func _readEnumType(_ valueType: DB.Enum.Type) -> DBType {
+        let valueType = valueType.valueType
         switch valueType {
             case is _DBIntegerType.Type: return .integer
             case is _DBTextType.Type: return .text
             case is _DBRealType.Type: return .real
             case is _DBBlobType.Type: return .blob
-            default: fatalError("\(type(of: value)) not supports DataBase！")
+            default: fatalError("\(valueType) not supports DataBase！")
         }
     }
 }
@@ -122,14 +123,14 @@ extension DB.Model {
     }
     
     /// 字段信息
-    var propertyInfos: [PropertyInfo] {
-        let mirror = Mirror(reflecting: self)
-        var field = [PropertyInfo]()
-        for (label, value) in mirror.children {
-            guard let label = label else { continue }
-            field.append(PropertyInfo.info(with: label, value: value))
+    static var propertyInfos: [PropertyInfo] {
+        guard let fields = try? self.decodeProperties() else { return [] }
+        
+        var propertyInfos = [PropertyInfo]()
+        for field in fields {
+            propertyInfos.append(PropertyInfo.info(with: field.label, valueType: field.valueType))
         }
-        return field
+        return propertyInfos
     }
 }
 
@@ -139,12 +140,12 @@ extension DB.Model {
 /// `Optional`
 private protocol _DBOptionalType {}
 extension Optional: _DBOptionalType {}
-extension Optional: _DBIntegerType where Wrapped: _DBIntegerType, Wrapped: _DBPrimaryType {}
+extension Optional: _DBIntegerType where Wrapped: _DBIntegerType/*, Wrapped: _DBPrimaryType */{}
 
 /// `主键`
-private protocol _DBPrimaryType {}
-extension DB.Primary: _DBPrimaryType {}
-extension Optional: _DBPrimaryType where Wrapped: _DBPrimaryType {}
+//private protocol _DBPrimaryType {}
+//extension DB.Primary: _DBPrimaryType {}
+//extension Optional: _DBPrimaryType where Wrapped: _DBPrimaryType {}
 
 /// 数据库`Integer`类型
 private protocol _DBIntegerType {}
@@ -153,7 +154,6 @@ extension Swift.Bool: _DBIntegerType {}
 extension UInt: _DBIntegerType {}
 extension DB.Bool: _DBIntegerType {}
 extension DB.Integer: _DBIntegerType {}
-extension DB.Primary: _DBIntegerType {}
 
 /// 数据库`Text`类型
 private protocol _DBTextType {}
