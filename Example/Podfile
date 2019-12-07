@@ -2,5 +2,5 @@ use_frameworks!
 
 target 'swift.db_Example' do
   pod 'swift.db', :path => '../'
-
+#  pod 'PropertyDecoder', :path => '../../PropertyDecoder'
 end
